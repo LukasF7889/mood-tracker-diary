@@ -1,8 +1,16 @@
+import { useEffect, useState } from "react";
 import useLocalStorage from "../hooks/useLocalStorage";
+import { useEntry } from "../context/EntryContext";
 
 const LoadEntries = () => {
-  const { data } = useLocalStorage();
-  console.log("Data", data);
+  const { returnStorage } = useLocalStorage();
+  const { lastEntry } = useEntry();
+  const [data, setData] = useState(returnStorage());
+
+  useEffect(() => {
+    const updatedData = returnStorage();
+    setData(updatedData);
+  }, [lastEntry]);
 
   return (
     <>

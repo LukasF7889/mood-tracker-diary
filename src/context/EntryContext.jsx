@@ -1,3 +1,7 @@
+import { useContext, createContext, useReducer, useState } from "react";
+
+const EntryContext = createContext();
+
 export const initialState = {
   id: "",
   title: "",
@@ -23,9 +27,9 @@ export function entryReducer(state, action) {
           ).toString(36),
       };
     case "SET_TITLE":
-      return { ...state, title: action.payload.trim() };
+      return { ...state, title: action.payload };
     case "SET_CONTENT":
-      return { ...state, content: action.payload.trim() };
+      return { ...state, content: action.payload };
     case "SET_CATEGORIES":
       return { ...state, categories: action.payload };
     case "SET_MOOD":
@@ -34,3 +38,16 @@ export function entryReducer(state, action) {
       return { ...state, createdAt: new Date().toISOString() };
   }
 }
+
+export const EntryProvider = ({ children }) => {
+  const [entry, dispatch] = useReducer(entryReducer, initialState);
+  const [lastEntry, setLastEntry] = useState(initialState);
+
+  return (
+    <EntryContext.Provider value={{ entry, dispatch, lastEntry, setLastEntry }}>
+      {children}
+    </EntryContext.Provider>
+  );
+};
+
+export const useEntry = () => useContext(EntryContext);

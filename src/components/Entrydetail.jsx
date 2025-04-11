@@ -2,8 +2,12 @@ import { useRef, useState, useEffect, useReducer } from "react";
 import MoodSelector from "./MoodSelector";
 import useLocalStorage from "../hooks/useLocalStorage";
 import Select from "react-select";
+import { useEntry } from "../context/EntryContext";
+import { useModal } from "../context/ModalContext";
 
-const Entrydetail = ({ entry, dispatch, modal }) => {
+const Entrydetail = () => {
+  const { closeModal } = useModal();
+  const { entry, dispatch, setLastEntry } = useEntry();
   const [error, setError] = useState(null);
 
   const categories = [
@@ -35,7 +39,8 @@ const Entrydetail = ({ entry, dispatch, modal }) => {
         id: crypto.randomUUID(),
       };
       saveEntry(newEntry);
-      modal.current.close();
+      setLastEntry(newEntry);
+      closeModal();
       setTimeout(() => {
         dispatch({ type: "RESET" });
       }, 1000);
