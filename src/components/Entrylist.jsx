@@ -9,9 +9,8 @@ const Entrylist = () => {
   return (
     <>
       <div className="bg-gradient-to-r from-violet-600 to-indigo-600">
-        <p>LIST</p>
         {/* GRID WITH ENTRIES */}
-        <div className="grid grid-cols-4 p-20 gap-4">
+        <div className="grid grid-cols-4 p-20 gap-6">
           {/* <div 
 
           // className="card w-full h-full p-4 rounded-xl shadow-lg border cursor-pointer border-white/20 backdrop-blur-md bg-white/10 text-white hover:bg-white/20 hover:-translate-1 transition duration-500 ease-in-out">
