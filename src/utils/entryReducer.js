@@ -23,9 +23,9 @@ export function entryReducer(state, action) {
           ).toString(36),
       };
     case "SET_TITLE":
-      return { ...state, title: action.payload };
+      return { ...state, title: action.payload.trim() };
     case "SET_CONTENT":
-      return { ...state, content: action.payload };
+      return { ...state, content: action.payload.trim() };
     case "SET_CATEGORIES":
       return { ...state, categories: action.payload };
     case "SET_MOOD":

@@ -34,6 +34,11 @@ const MoodSelector = ({ entry, dispatch, moodRef }) => {
 
           //   img.style.filter = "drop-shadow(0 0 0.75rem crimson)";
           img.style.filter = "opacity(100%)";
+          img.classList.add("animate-jump");
+
+          setTimeout(() => {
+            img.classList.remove("animate-jump");
+          }, 500);
         }
       });
     }
