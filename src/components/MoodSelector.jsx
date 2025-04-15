@@ -4,10 +4,25 @@ import imgMood3 from "../assets/neutral.png";
 import imgMood4 from "../assets/smile.png";
 import imgMood5 from "../assets/lol.png";
 import { useRef, useState, useEffect } from "react";
+import { useEntry } from "../context/EntryContext";
 
 const MoodSelector = ({ entry, dispatch, moodRef }) => {
+  const { entryMode } = useEntry();
+
+  const moodImages = {
+    mood1: imgMood1,
+    mood2: imgMood2,
+    mood3: imgMood3,
+    mood4: imgMood4,
+    mood5: imgMood5,
+  };
+
   const setMood = (mood) => {
-    dispatch({ type: "SET_MOOD", payload: mood });
+    if (entryMode === "create") {
+      dispatch({ type: "SET_MOOD", payload: mood });
+    } else {
+      console.log("Mood change not possible");
+    }
   };
 
   useEffect(() => {
@@ -43,6 +58,18 @@ const MoodSelector = ({ entry, dispatch, moodRef }) => {
       });
     }
   };
+
+  if (entryMode === "read") {
+    return (
+      <>
+        {
+          <button type="button" id={entry.mood}>
+            <img src={moodImages[entry.mood]} alt={entry.mood} />
+          </button>
+        }
+      </>
+    );
+  }
 
   return (
     <>

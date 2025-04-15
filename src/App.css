@@ -15,6 +15,17 @@
   }
 }
 
-.animate-jump {
-  animation: jump 0.3s ease-in-out;
+@layer utilities {
+  .animate-jump {
+    animation: jump 0.3s ease-in-out;
+  }
+}
+
+@layer base {
+  textarea:disabled,
+  .textarea:disabled {
+    cursor: auto !important;
+    color: white !important;
+    background-color: transparent !important;
+  }
 }

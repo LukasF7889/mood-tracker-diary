@@ -1,7 +1,5 @@
 import { useModal } from "../context/ModalContext";
 import Entrydetail from "./Entrydetail";
-import { entryReducer, initialState } from "../context/EntryContext";
-import { useState } from "react";
 
 const ModalComponent = () => {
   const { modalRef, closeModal } = useModal();

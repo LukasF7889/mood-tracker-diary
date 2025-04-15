@@ -6,10 +6,13 @@ import imgMood2 from "../assets/sarcastic.png";
 import imgMood3 from "../assets/neutral.png";
 import imgMood4 from "../assets/smile.png";
 import imgMood5 from "../assets/lol.png";
+import { useModal } from "../context/ModalContext";
+import ModalComponent from "./ModalComponent";
 
 const LoadEntries = () => {
+  const { openModal } = useModal();
   const { returnStorage } = useLocalStorage();
-  const { lastEntry } = useEntry();
+  const { lastEntry, dispatch, entryMode, setEntryMode } = useEntry();
   const [data, setData] = useState(returnStorage());
 
   const showMood = (mood) => {
@@ -30,14 +33,25 @@ const LoadEntries = () => {
   const formatDate = (dateString) => {
     const date = new Date(dateString);
     return date.toLocaleString("en-EN", {
-      weekday: "long", // Wochentag (z.B. Montag)
+      // weekday: "long", // Wochentag (z.B. Montag)
       year: "numeric", // Jahr (z.B. 2025)
       month: "long", // Monat (z.B. Januar)
       day: "numeric", // Tag (z.B. 11)
       hour: "2-digit", // Stunde (z.B. 14)
       minute: "2-digit", // Minute (z.B. 30)
-      second: "2-digit", // Sekunde (z.B. 45)
+      // second: "2-digit", // Sekunde (z.B. 45)
     });
+  };
+
+  const showEntry = (entry) => {
+    setEntryMode("read");
+    dispatch({ type: "SET_TITLE", payload: entry.title });
+    dispatch({ type: "SET_MOOD", payload: entry.mood });
+    dispatch({ type: "SET_CONTENT", payload: entry.content });
+    dispatch({ type: "SET_CATEGORIES", payload: entry.categories });
+    dispatch({ type: "SET_ID", payload: entry.id });
+    dispatch({ type: "SET_DATE", payload: entry.createdAt });
+    openModal();
   };
 
   useEffect(() => {
@@ -55,6 +69,7 @@ const LoadEntries = () => {
           <div
             key={e.id}
             className="card overflow-hidden w-full h-75 p-4 rounded-xl shadow-lg border cursor-pointer border-white/20 backdrop-blur-md bg-white/10 text-white hover:bg-white/20 hover:-translate-1 transition duration-500 ease-in-out"
+            onClick={() => showEntry(e)}
           >
             <img
               src={showMood(e.mood)}
@@ -63,14 +78,14 @@ const LoadEntries = () => {
             <div className="card-body">
               <small>{formatDate(e.createdAt)}</small>
               <h2 className="card-title text-2xl wrap-anywhere">
-                {e.title.slice(0, 45)}
+                {e.title.replace(/(\r\n|\n|\r)/gm, "").slice(0, 45)}
                 {e.title.length > 45 ? "..." : null}
               </h2>
               <p className="wrap-anywhere">
-                {e.content.slice(0, 100)}
+                {e.content.replace(/(\r\n|\n|\r)/gm, "").slice(0, 100)}
                 {e.content.length > 100 ? "..." : null}
               </p>
-              <div className="card-actions justify-start">
+              <div className="card-actions justify-start ">
                 {console.log(e.categories)}
                 {Array.isArray(e.categories) &&
                   e.categories.map((cat, index) => (
@@ -82,6 +97,7 @@ const LoadEntries = () => {
             </div>
           </div>
         ))}
+      <ModalComponent />
     </>
   );
 };
