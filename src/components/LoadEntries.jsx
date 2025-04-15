@@ -9,7 +9,7 @@ import imgMood5 from "../assets/lol.png";
 import { useModal } from "../context/ModalContext";
 import ModalComponent from "./ModalComponent";
 
-const LoadEntries = () => {
+const LoadEntries = ({ filter }) => {
   const { openModal } = useModal();
   const { returnStorage } = useLocalStorage();
   const { lastEntry, dispatch, entryMode, setEntryMode } = useEntry();
@@ -62,6 +62,7 @@ const LoadEntries = () => {
   return (
     <>
       {data
+        .filter((e) => e.title.includes(filter))
         .sort((first, second) => {
           return new Date(second.createdAt) - new Date(first.createdAt);
         })
@@ -86,7 +87,6 @@ const LoadEntries = () => {
                 {e.content.length > 100 ? "..." : null}
               </p>
               <div className="card-actions justify-start ">
-                {console.log(e.categories)}
                 {Array.isArray(e.categories) &&
                   e.categories.map((cat, index) => (
                     <div key={index} className="badge badge-outline">

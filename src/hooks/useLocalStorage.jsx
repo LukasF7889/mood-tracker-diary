@@ -42,8 +42,6 @@ const useLocalStorage = () => {
       const newData = storedData.filter(
         (e) => String(e.id) !== String(entry.id)
       );
-      console.log(entry.id);
-      console.log(storedData);
       localStorage.setItem("entries", JSON.stringify(newData));
       setData(newData);
     } catch (err) {

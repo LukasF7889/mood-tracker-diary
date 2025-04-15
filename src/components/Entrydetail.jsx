@@ -10,7 +10,6 @@ const Entrydetail = () => {
   const { closeModal } = useModal();
   const { entry, dispatch, setLastEntry, entryMode } = useEntry();
   const [error, setError] = useState(null);
-  const { returnStorage } = useLocalStorage();
 
   const customSelectStyles = {
     control: (base, state) => ({
@@ -100,7 +99,7 @@ const Entrydetail = () => {
       closeModal();
       setTimeout(() => {
         dispatch({ type: "RESET" });
-      }, 1000);
+      }, 10);
     } else {
       setError("Title & description can't be empty :(");
     }
@@ -172,7 +171,21 @@ const Entrydetail = () => {
             onChange={selectValues}
             value={entry.categories}
           />
-          {/* Show categories if create is off */}
+        </div>
+
+        <div
+          className={`flex justify-between items-center ${
+            entry.title === "" ? "hidden" : "block"
+          }`}
+          ref={moodRef}
+        >
+          <MoodSelector
+            className="p-4"
+            entry={entry}
+            dispatch={dispatch}
+            moodRef={moodRef}
+          />
+          {/* Display categories here only if in read mode */}
           <div className={entryMode === "read" ? "block" : "hidden"}>
             {Array.isArray(entry.categories) &&
               entry.categories.map((cat, index) => (
@@ -184,18 +197,6 @@ const Entrydetail = () => {
                 </div>
               ))}
           </div>
-        </div>
-
-        <div
-          className={`flex gap-4 ${entry.title === "" ? "hidden" : "block"}`}
-          ref={moodRef}
-        >
-          <MoodSelector
-            className="p-4"
-            entry={entry}
-            dispatch={dispatch}
-            moodRef={moodRef}
-          />
         </div>
 
         <textarea

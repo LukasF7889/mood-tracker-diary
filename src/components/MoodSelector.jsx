@@ -28,7 +28,7 @@ const MoodSelector = ({ entry, dispatch, moodRef }) => {
   useEffect(() => {
     // Call the function once the entry.mood state changes
     styleMoodButtons();
-  }, [entry.mood]);
+  }, [entry.mood, entryMode]);
 
   const styleMoodButtons = () => {
     const buttons = moodRef.current?.querySelectorAll("button");

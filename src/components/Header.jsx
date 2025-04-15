@@ -1,7 +1,7 @@
 const Header = () => {
   return (
     <>
-      <p>HEADER</p>
+      <h1 className="text-5xl font-extrabold text-center py-10">Mood Diary</h1>
     </>
   );
 };

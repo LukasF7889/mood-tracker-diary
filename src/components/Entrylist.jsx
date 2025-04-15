@@ -4,7 +4,7 @@ import { useModal } from "../context/ModalContext";
 import ModalComponent from "./ModalComponent";
 import { useEntry } from "../context/EntryContext";
 
-const Entrylist = () => {
+const Entrylist = ({ filter }) => {
   const { openModal } = useModal();
   const { setEntryMode, dispatch } = useEntry();
 
@@ -16,9 +16,9 @@ const Entrylist = () => {
 
   return (
     <>
-      <div className="bg-gradient-to-r from-violet-600 to-indigo-600">
+      <div className="">
         {/* GRID WITH ENTRIES */}
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 2xl:grid-cols-5 p-20 gap-6">
+        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 2xl:grid-cols-5 p-10 px-20 gap-6">
           {/* <div 
 
           // className="card w-full h-full p-4 rounded-xl shadow-lg border cursor-pointer border-white/20 backdrop-blur-md bg-white/10 text-white hover:bg-white/20 hover:-translate-1 transition duration-500 ease-in-out">
@@ -31,7 +31,7 @@ const Entrylist = () => {
             <img src={add} className="w-15 self-center" alt="Plus Icon" />
             Create new entry
           </button>
-          <LoadEntries />
+          <LoadEntries filter={filter} />
         </div>
       </div>
       <ModalComponent />
