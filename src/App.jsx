@@ -20,7 +20,7 @@ function App() {
         <header>
           <Header />
         </header>
-        <div className="flex flex-cols justify-between p10 px-20 align-middle">
+        <div className="flex flex-cols justify-between p-0 px-20 items-end">
           <Searchbar filter={filter} setFilter={setFilter} />
           <Analysis />
         </div>

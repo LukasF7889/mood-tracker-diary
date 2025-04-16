@@ -13,10 +13,11 @@ export const initialState = {
 
 export function entryReducer(state, action) {
   switch (action.type) {
-    case "RESET":
+    case "RESET": {
       return {
         ...initialState,
       };
+    }
     case "SET_ID":
       return { ...state, id: action.payload };
     case "SET_TITLE":
@@ -34,7 +35,7 @@ export function entryReducer(state, action) {
 
 export const EntryProvider = ({ children }) => {
   const [entry, dispatch] = useReducer(entryReducer, initialState);
-  const [lastEntry, setLastEntry] = useState(initialState);
+  // const [lastEntry, setLastEntry] = useState(null);
   const [entryMode, setEntryMode] = useState("create");
 
   return (
@@ -42,8 +43,6 @@ export const EntryProvider = ({ children }) => {
       value={{
         entry,
         dispatch,
-        lastEntry,
-        setLastEntry,
         entryMode,
         setEntryMode,
       }}

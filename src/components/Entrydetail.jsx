@@ -95,7 +95,6 @@ const Entrydetail = () => {
         newEntry = entry;
       }
       saveEntry(newEntry);
-      setLastEntry(newEntry);
       closeModal();
       setTimeout(() => {
         dispatch({ type: "RESET" });

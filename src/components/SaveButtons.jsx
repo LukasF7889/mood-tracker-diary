@@ -3,13 +3,13 @@ import { useModal } from "../context/ModalContext";
 import useLocalStorage from "../hooks/useLocalStorage";
 
 const SaveButtons = () => {
-  const { entry, entryMode, setLastEntry, setEntryMode } = useEntry();
+  const { entry, entryMode, setEntryMode } = useEntry();
   const { deleteEntry } = useLocalStorage();
   const { closeModal } = useModal();
 
   const handleDelete = (post) => {
     deleteEntry(post);
-    setLastEntry();
+    // setLastEntry();
     closeModal();
   };
 

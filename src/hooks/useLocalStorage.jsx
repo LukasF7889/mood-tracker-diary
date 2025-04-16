@@ -1,6 +1,8 @@
 import { useState } from "react";
+import { useEntry } from "../context/EntryContext";
 
 const useLocalStorage = () => {
+  const { lastEntry, setLastEntry } = useEntry();
   const [data, setData] = useState(() => {
     const storedData = localStorage.getItem("entries");
     return storedData ? JSON.parse(storedData) : [];
@@ -13,7 +15,8 @@ const useLocalStorage = () => {
 
   const saveEntry = (entry) => {
     let newData;
-    const existingItem = data.find(({ id }) => id === entry.id);
+    const storedData = JSON.parse(localStorage.getItem("entries")) || [];
+    const existingItem = storedData.find(({ id }) => id === entry.id);
     console.log("Saving entry with ID:", entry.id);
     console.log(
       "Existing entries:",
@@ -21,9 +24,9 @@ const useLocalStorage = () => {
     );
 
     if (!existingItem) {
-      newData = [...data, entry];
+      newData = [...storedData, entry];
     } else {
-      newData = data.map((e) => {
+      newData = storedData.map((e) => {
         if (e.id === entry.id) {
           return { ...entry };
         } else {
@@ -34,6 +37,10 @@ const useLocalStorage = () => {
 
     localStorage.setItem("entries", JSON.stringify(newData));
     setData(newData);
+    console.log(newData);
+    // const date = new Date();
+    // setLastEntry(date);
+    // console.log(lastEntry);
   };
 
   const deleteEntry = (entry) => {
@@ -44,6 +51,10 @@ const useLocalStorage = () => {
       );
       localStorage.setItem("entries", JSON.stringify(newData));
       setData(newData);
+      console.log(newData);
+      // const date = new Date();
+      // setLastEntry(date);
+      // console.log(lastEntry);
     } catch (err) {
       console.error("Failed to delete entry", err);
     }

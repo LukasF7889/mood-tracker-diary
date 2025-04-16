@@ -11,9 +11,10 @@ import ModalComponent from "./ModalComponent";
 
 const LoadEntries = ({ filter }) => {
   const { openModal } = useModal();
-  const { returnStorage } = useLocalStorage();
-  const { lastEntry, dispatch, entryMode, setEntryMode } = useEntry();
-  const [data, setData] = useState(returnStorage());
+  const { data } = useLocalStorage();
+  const { dispatch, setEntryMode } = useEntry();
+  // const [data, setData] = useState(returnStorage());
+  const [currData, setCurrData] = useState(data);
 
   const showMood = (mood) => {
     switch (mood) {
@@ -55,14 +56,13 @@ const LoadEntries = ({ filter }) => {
   };
 
   useEffect(() => {
-    const updatedData = returnStorage();
-    setData(updatedData);
-  }, [lastEntry]);
+    setCurrData(data);
+  }, [data]);
 
   return (
     <>
-      {data
-        .filter((e) => e.title.includes(filter))
+      {currData
+        .filter((e) => e.title.includes(filter) || e.content.includes(filter))
         .sort((first, second) => {
           return new Date(second.createdAt) - new Date(first.createdAt);
         })
