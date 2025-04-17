@@ -6,7 +6,7 @@ const ModalComponent = () => {
 
   return (
     <dialog id="entryDetailModal" className="modal" ref={modalRef}>
-      <div className="modal-box">
+      <div className="modal-box overflow-visible">
         <form method="dialog">
           {/* if there is a button in form, it will close the modal */}
           <button

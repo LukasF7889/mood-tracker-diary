@@ -4,7 +4,6 @@ import Navbar from "./components/Navbar";
 import Header from "./components/Header";
 import Entrylist from "./components/Entrylist";
 import Searchbar from "./components/Searchbar";
-import useLocalStorage from "./hooks/useLocalStorage";
 import Analysis from "./components/Analysis";
 
 function App() {
@@ -20,7 +19,7 @@ function App() {
         <header>
           <Header />
         </header>
-        <div className="flex flex-cols justify-between p-0 px-20 items-end">
+        <div className="flex flex-cols h-[2.5rem] justify-between p-0 px-20 items-end">
           <Searchbar filter={filter} setFilter={setFilter} />
           <Analysis />
         </div>

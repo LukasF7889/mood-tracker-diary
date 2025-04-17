@@ -1,5 +1,5 @@
 import { useEffect, useState } from "react";
-import useLocalStorage from "../hooks/useLocalStorage";
+// import useLocalStorage from "../hooks/useLocalStorage";
 import { useEntry } from "../context/EntryContext";
 import imgMood1 from "../assets/angry.png";
 import imgMood2 from "../assets/sarcastic.png";
@@ -8,12 +8,14 @@ import imgMood4 from "../assets/smile.png";
 import imgMood5 from "../assets/lol.png";
 import { useModal } from "../context/ModalContext";
 import ModalComponent from "./ModalComponent";
+import { useLocalStorageContext } from "../context/LocalStorageContext";
 
 const LoadEntries = ({ filter }) => {
   const { openModal } = useModal();
-  const { data } = useLocalStorage();
+  // const { data } = useLocalStorage();
   const { dispatch, setEntryMode } = useEntry();
   // const [data, setData] = useState(returnStorage());
+  const { data, setData } = useLocalStorageContext();
   const [currData, setCurrData] = useState(data);
 
   const showMood = (mood) => {

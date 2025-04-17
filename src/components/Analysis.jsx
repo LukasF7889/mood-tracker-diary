@@ -1,13 +1,18 @@
-import useLocalStorage from "../hooks/useLocalStorage";
+// import useLocalStorage from "../hooks/useLocalStorage";
 import imgMood1 from "../assets/angry.png";
 import imgMood5 from "../assets/lol.png";
 import { useEffect, useState } from "react";
 import { useEntry } from "../context/EntryContext";
+import { useLocalStorageContext } from "../context/LocalStorageContext";
 
 const Analysis = () => {
-  const { returnStorage } = useLocalStorage();
+  // const { returnStorage, data } = useLocalStorage();
+  const { data } = useLocalStorageContext();
   const [perc, setPerc] = useState(0);
-  const { lastEntry } = useEntry();
+  // const { lastEntry } = useEntry();
+  console.log(data);
+
+  const [color, setColor] = useState("bg-amber-300");
 
   const moodChart = {
     mood1: 1,
@@ -18,33 +23,42 @@ const Analysis = () => {
   };
 
   useEffect(() => {
-    const data = returnStorage();
     let sum = 0;
-    for (let i = 0; i < data.length; i++) {
+    for (let i = 0; i < data?.length; i++) {
       sum += moodChart[data[i].mood];
     }
     const avg = sum / data.length || 0;
     const percentage = (100 / 5) * avg;
     setPerc(percentage);
     console.log(perc);
-  }, [lastEntry]);
+
+    if (percentage < 35) {
+      setColor("bg-red-500");
+    } else if (percentage < 65) {
+      setColor("bg-amber-300");
+    } else if (percentage >= 65) {
+      setColor("bg-green-300");
+    }
+  }, [data]);
 
   return (
-    <>
-      <div className="flex flex-col w-[25vw] text-center">
-        <h2>Mood overview</h2>
-        <div className="bg-white rounded-full flex flex-cols justify-between items-center">
-          <img className="size-[3rem]" src={imgMood1} />
-          <div className="rounded-full w-full h-4 bg-gray-400">
-            <div
-              style={{ width: `${perc}%` }}
-              className={`rounded-full h-4 bg-amber-300`}
-            ></div>
+    <div className="flex flex-col w-[25vw] h-full text-center">
+      <div className="bg-gray-800 h-[100%] rounded-sm h-full flex flex-cols justify-between items-center">
+        <div className="flex flex-col w-full px-2 py-2 ">
+          {/* <h2>Mood overview</h2> */}
+          <div className="flex w-full items-center gap-2">
+            <img className="size-[1rem]" src={imgMood1} />
+            <div className="rounded-full w-full h-4 bg-gray-400">
+              <div
+                style={{ width: `${perc}%` }}
+                className={`rounded-full h-4 ${color}`}
+              ></div>
+            </div>
+            <img className="size-[1rem]" src={imgMood5} />
           </div>
-          <img className="size-[3rem]" src={imgMood5} />
         </div>
       </div>
-    </>
+    </div>
   );
 };
 

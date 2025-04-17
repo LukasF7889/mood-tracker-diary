@@ -1,10 +1,10 @@
 import { useEntry } from "../context/EntryContext";
 import { useModal } from "../context/ModalContext";
-import useLocalStorage from "../hooks/useLocalStorage";
+import { useLocalStorageContext } from "../context/LocalStorageContext";
 
 const SaveButtons = () => {
   const { entry, entryMode, setEntryMode } = useEntry();
-  const { deleteEntry } = useLocalStorage();
+  const { deleteEntry } = useLocalStorageContext();
   const { closeModal } = useModal();
 
   const handleDelete = (post) => {

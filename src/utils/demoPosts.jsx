@@ -1,5 +1,4 @@
-import { useState } from "react";
-import useLocalStorage from "../hooks/useLocalStorage";
+// import { useLocalStorageContext } from "../context/LocalStorageContext";
 
 export function demoPosts(num, saveEntry) {
   const posts = [

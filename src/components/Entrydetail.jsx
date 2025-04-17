@@ -1,15 +1,18 @@
 import { useRef, useState, useEffect, useReducer } from "react";
 import MoodSelector from "./MoodSelector";
-import useLocalStorage from "../hooks/useLocalStorage";
+// import useLocalStorage from "../hooks/useLocalStorage";
 import Select from "react-select";
 import { useEntry } from "../context/EntryContext";
 import { useModal } from "../context/ModalContext";
 import SaveButtons from "./SaveButtons";
+import { useLocalStorageContext } from "../context/LocalStorageContext";
 
 const Entrydetail = () => {
   const { closeModal } = useModal();
   const { entry, dispatch, setLastEntry, entryMode } = useEntry();
   const [error, setError] = useState(null);
+  //get acces to saveEntry function in useLocalStorage Hook
+  const { saveEntry } = useLocalStorageContext();
 
   const customSelectStyles = {
     control: (base, state) => ({
@@ -72,9 +75,6 @@ const Entrydetail = () => {
     { value: "creativity", label: "Creativity" },
     { value: "hobby", label: "Hobbies" },
   ];
-
-  //get acces to saveEntry function in useLocalStorage Hook
-  const { saveEntry } = useLocalStorage();
 
   function selectValues(values) {
     dispatch({ type: "SET_CATEGORIES", payload: values });
