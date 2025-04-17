@@ -17,6 +17,14 @@ const MoodSelector = ({ entry, dispatch, moodRef }) => {
     mood5: imgMood5,
   };
 
+  const moodValues = {
+    mood1: "Very bad",
+    mood2: "bad",
+    mood3: "neutral",
+    mood4: "good",
+    mood5: "excellent",
+  };
+
   const setMood = (mood) => {
     if (entryMode === "create") {
       dispatch({ type: "SET_MOOD", payload: mood });
@@ -73,7 +81,9 @@ const MoodSelector = ({ entry, dispatch, moodRef }) => {
 
   return (
     <>
-      <p>Select mood: {entry.mood}</p>
+      <p>
+        Select mood:<br></br> {moodValues[entry.mood]}
+      </p>
       <button type="button" id="mood1" onClick={() => setMood("mood1")}>
         <img src={imgMood1} alt="Very bad" />
       </button>

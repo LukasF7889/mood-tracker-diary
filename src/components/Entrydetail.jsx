@@ -98,7 +98,7 @@ const Entrydetail = () => {
       closeModal();
       setTimeout(() => {
         dispatch({ type: "RESET" });
-      }, 10);
+      }, 200);
     } else {
       setError("Title & description can't be empty :(");
     }
