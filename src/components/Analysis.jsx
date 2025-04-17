@@ -42,8 +42,8 @@ const Analysis = () => {
   }, [data]);
 
   return (
-    <div className="flex flex-col w-[25vw] h-full text-center">
-      <div className="bg-gray-800 h-[100%] rounded-sm h-full flex flex-cols justify-between items-center">
+    <div className="flex flex-col w-[25vw] min-w-[200px] max-w-[400px] h-[2.4rem] text-center">
+      <div className="bg-gray-800 rounded-sm h-full flex flex-cols justify-between items-center">
         <div className="flex flex-col w-full px-2 py-2 ">
           {/* <h2>Mood overview</h2> */}
           <div className="flex w-full items-center gap-2">

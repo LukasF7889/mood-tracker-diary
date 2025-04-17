@@ -19,7 +19,7 @@ function App() {
         <header>
           <Header />
         </header>
-        <div className="flex flex-cols h-[2.5rem] justify-between p-0 px-20 items-end">
+        <div className="flex flex-cols justify-between flex-wrap gap-4 p-0 px-20 items-end">
           <Searchbar filter={filter} setFilter={setFilter} />
           <Analysis />
         </div>
