@@ -6,6 +6,7 @@ import { useEntry } from "../context/EntryContext";
 import { useModal } from "../context/ModalContext";
 import SaveButtons from "./SaveButtons";
 import { useLocalStorageContext } from "../context/LocalStorageContext";
+import { toast } from "react-toastify";
 
 const Entrydetail = () => {
   const { closeModal } = useModal();

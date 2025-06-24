@@ -8,7 +8,10 @@ const SaveButtons = () => {
   const { closeModal } = useModal();
 
   const handleDelete = (post) => {
-    deleteEntry(post);
+    if (window.confirm("Are you sure you want to delete this entry?")) {
+      deleteEntry(post);
+    }
+
     // setLastEntry();
     closeModal();
   };

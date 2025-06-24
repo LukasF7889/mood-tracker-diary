@@ -1,4 +1,5 @@
 import { useContext, createContext, useState, useReducer } from "react";
+import { toast } from "react-toastify";
 
 const LocalStorageContext = createContext();
 
@@ -38,6 +39,7 @@ export const LocalStorageProvider = ({ children }) => {
     localStorage.setItem("entries", JSON.stringify(newData));
     setData(newData);
     console.log(newData);
+    toast("Entry saved");
   };
 
   const deleteEntry = (entry) => {
@@ -49,6 +51,7 @@ export const LocalStorageProvider = ({ children }) => {
       localStorage.setItem("entries", JSON.stringify(newData));
       setData(newData);
       console.log(newData);
+      toast("Entry deleted");
     } catch (err) {
       console.error("Failed to delete entry", err);
     }

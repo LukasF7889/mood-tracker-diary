@@ -9,8 +9,14 @@ import imgMood5 from "../assets/lol.png";
 import { useModal } from "../context/ModalContext";
 import ModalComponent from "./ModalComponent";
 import { useLocalStorageContext } from "../context/LocalStorageContext";
+import getYearMonth from "../utils/getYearMonth";
 
-const LoadEntries = ({ filter }) => {
+const LoadEntries = ({
+  filter,
+  setEmptyList,
+  currentMonth,
+  setCurrentMonth,
+}) => {
   const { openModal } = useModal();
   // const { data } = useLocalStorage();
   const { dispatch, setEntryMode } = useEntry();
@@ -18,6 +24,17 @@ const LoadEntries = ({ filter }) => {
   const { data, setData } = useLocalStorageContext();
   const [currData, setCurrData] = useState(data);
 
+  // function to switch month pagination
+  const changeMonth = (direction) => {
+    const [year, month] = currentMonth.split("-").map(Number);
+    const newDate = new Date(year, month - 1 + direction);
+    const newYearMonth = `${newDate.getFullYear()}-${String(
+      newDate.getMonth() + 1
+    ).padStart(2, "0")}`;
+    setCurrentMonth(newYearMonth);
+  };
+
+  // Show correct mood
   const showMood = (mood) => {
     switch (mood) {
       case "mood1":
@@ -33,16 +50,15 @@ const LoadEntries = ({ filter }) => {
     }
   };
 
+  // format date for entries
   const formatDate = (dateString) => {
     const date = new Date(dateString);
     return date.toLocaleString("en-EN", {
-      // weekday: "long", // Wochentag (z.B. Montag)
-      year: "numeric", // Jahr (z.B. 2025)
-      month: "long", // Monat (z.B. Januar)
-      day: "numeric", // Tag (z.B. 11)
-      hour: "2-digit", // Stunde (z.B. 14)
-      minute: "2-digit", // Minute (z.B. 30)
-      // second: "2-digit", // Sekunde (z.B. 45)
+      year: "numeric",
+      month: "long",
+      day: "numeric",
+      hour: "2-digit",
+      minute: "2-digit",
     });
   };
 
@@ -59,12 +75,27 @@ const LoadEntries = ({ filter }) => {
 
   useEffect(() => {
     setCurrData(data);
+    if (data.length < 1) {
+      setEmptyList(true);
+    } else {
+      setEmptyList(false);
+    }
   }, [data]);
 
   return (
     <>
       {currData
-        .filter((e) => e.title.includes(filter) || e.content.includes(filter))
+        .filter((e) => {
+          if (filter.trim() === "") {
+            //if there is no filtertext, show entries from current month
+            return getYearMonth(e.createdAt) === currentMonth;
+          } else {
+            return (
+              e.title.toLowerCase().includes(filter) ||
+              e.content.toLowerCase().includes(filter)
+            );
+          }
+        })
         .sort((first, second) => {
           return new Date(second.createdAt) - new Date(first.createdAt);
         })

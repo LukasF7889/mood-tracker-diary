@@ -1,6 +1,7 @@
 // import { useLocalStorageContext } from "../context/LocalStorageContext";
 
 export function demoPosts(num, saveEntry) {
+  const now = new Date();
   const posts = [
     {
       id: "1",
@@ -220,7 +221,18 @@ export function demoPosts(num, saveEntry) {
   ];
 
   for (let i = 0; i < num; i++) {
-    const randNr = Math.floor(Math.random() * posts.length);
-    saveEntry(posts[randNr]);
+    const post = { ...posts[i % posts.length] };
+
+    const date = new Date();
+    const monthOffset = i % 3; // 0 = aktueller Monat, 1 = -1 Monat, 2 = -2 Monate
+    date.setMonth(now.getMonth() - monthOffset);
+    date.setDate(Math.floor(Math.random() * 28) + 1);
+    date.setHours(12);
+    date.setMinutes(0);
+
+    post.createdAt = date.toISOString();
+    post.id = `${i + 1}`;
+
+    saveEntry(post);
   }
 }

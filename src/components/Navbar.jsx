@@ -1,19 +1,25 @@
 import { demoPosts } from "../utils/demoPosts";
 // import useLocalStorage from "../hooks/useLocalStorage";
 import { useLocalStorageContext } from "../context/LocalStorageContext";
+import Searchbar from "./Searchbar";
 
-const Navbar = () => {
-  const { saveEntry } = useLocalStorageContext();
+const Navbar = ({ filter, setFilter }) => {
+  const { data, saveEntry } = useLocalStorageContext();
   return (
     <>
       <div className="flex flex-cols justify-between px-2 py-1">
+        <Searchbar filter={filter} setFilter={setFilter} />
         <p className="font-bold">Mood Diary!</p>
-        <button
-          className="cursor-pointer hover:underline"
-          onClick={() => demoPosts(5, saveEntry)}
-        >
-          Add demo posts
-        </button>
+        {data.length < 20 ? (
+          <button
+            className="cursor-pointer btn btn-soft btn-secondary"
+            onClick={() => demoPosts(20, saveEntry)}
+          >
+            Add demo posts
+          </button>
+        ) : (
+          <p></p>
+        )}
       </div>
     </>
   );

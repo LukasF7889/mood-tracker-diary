@@ -3,27 +3,30 @@ import viteLogo from "/vite.svg";
 import Navbar from "./components/Navbar";
 import Header from "./components/Header";
 import Entrylist from "./components/Entrylist";
-import Searchbar from "./components/Searchbar";
-import Analysis from "./components/Analysis";
+import { ToastContainer } from "react-toastify";
 
 function App() {
   const [filter, setFilter] = useState("");
 
   return (
     <>
+      <ToastContainer
+        position="top-right"
+        autoClose={5000}
+        hideProgressBar={false}
+        newestOnTop={false}
+        closeOnClick={false}
+        rtl={false}
+        pauseOnFocusLoss
+        draggable
+        pauseOnHover
+        theme="light"
+      />
       <nav>
-        <Navbar />
+        <Navbar filter={filter} setFilter={setFilter} />
       </nav>
 
       <main className="bg-gradient-to-r from-violet-600 to-indigo-600">
-        <header>
-          <Header />
-        </header>
-        <div className="flex flex-cols justify-between flex-wrap gap-4 p-0 px-20 items-end">
-          <Searchbar filter={filter} setFilter={setFilter} />
-          <Analysis />
-        </div>
-
         <Entrylist filter={filter} />
       </main>
     </>

@@ -4,8 +4,9 @@ import imgMood5 from "../assets/lol.png";
 import { useEffect, useState } from "react";
 import { useEntry } from "../context/EntryContext";
 import { useLocalStorageContext } from "../context/LocalStorageContext";
+import getYearMonth from "../utils/getYearMonth";
 
-const Analysis = () => {
+const Analysis = ({ currentMonth }) => {
   // const { returnStorage, data } = useLocalStorage();
   const { data } = useLocalStorageContext();
   const [perc, setPerc] = useState(0);
@@ -24,10 +25,13 @@ const Analysis = () => {
 
   useEffect(() => {
     let sum = 0;
-    for (let i = 0; i < data?.length; i++) {
-      sum += moodChart[data[i].mood];
+    const filteredData = data.filter(
+      (e) => getYearMonth(e.createdAt) === currentMonth
+    );
+    for (let i = 0; i < filteredData?.length; i++) {
+      sum += moodChart[filteredData[i].mood];
     }
-    const avg = sum / data.length || 0;
+    const avg = sum / filteredData.length || 0;
     const percentage = (100 / 5) * avg;
     setPerc(percentage);
     console.log(perc);
@@ -39,7 +43,7 @@ const Analysis = () => {
     } else if (percentage >= 65) {
       setColor("bg-green-300");
     }
-  }, [data]);
+  }, [data, currentMonth]);
 
   return (
     <div className="flex flex-col w-[25vw] min-w-[200px] max-w-[400px] h-[2.4rem] text-center">
