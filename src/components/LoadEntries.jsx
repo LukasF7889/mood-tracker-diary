@@ -91,8 +91,8 @@ const LoadEntries = ({
             return getYearMonth(e.createdAt) === currentMonth;
           } else {
             return (
-              e.title.toLowerCase().includes(filter) ||
-              e.content.toLowerCase().includes(filter)
+              e.title.toLowerCase().includes(filter.toLowerCase()) ||
+              e.content.toLowerCase().includes(filter.toLowerCase())
             );
           }
         })
