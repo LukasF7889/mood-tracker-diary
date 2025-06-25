@@ -39,7 +39,7 @@ export const LocalStorageProvider = ({ children }) => {
     localStorage.setItem("entries", JSON.stringify(newData));
     setData(newData);
     console.log(newData);
-    toast("Entry saved");
+    toast("Entry saved", { toastId: "success" });
   };
 
   const deleteEntry = (entry) => {

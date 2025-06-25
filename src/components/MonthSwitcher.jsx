@@ -15,14 +15,14 @@ const MonthSwitcher = ({ currentMonth, setCurrentMonth }) => {
   ).padStart(2, "0")}`;
 
   return (
-    <div className="flex justify-between items-center mb-4 text-white">
+    <div className="flex justify-between items-center  gap-4 mb-4 text-white">
       <button
         onClick={() => changeMonth(-1)}
         className="text-xl cursor-pointer hover:-translate-y-0.5"
       >
         ←
       </button>
-      <span className="text-lg font-bold">
+      <span className="text-lg text-center font-bold min-w-[140px]">
         {new Date(currentMonth + "-01").toLocaleString("default", {
           month: "long",
           year: "numeric",

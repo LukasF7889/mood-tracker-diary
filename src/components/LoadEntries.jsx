@@ -18,21 +18,10 @@ const LoadEntries = ({
   setCurrentMonth,
 }) => {
   const { openModal } = useModal();
-  // const { data } = useLocalStorage();
   const { dispatch, setEntryMode } = useEntry();
-  // const [data, setData] = useState(returnStorage());
   const { data, setData } = useLocalStorageContext();
   const [currData, setCurrData] = useState(data);
-
-  // function to switch month pagination
-  const changeMonth = (direction) => {
-    const [year, month] = currentMonth.split("-").map(Number);
-    const newDate = new Date(year, month - 1 + direction);
-    const newYearMonth = `${newDate.getFullYear()}-${String(
-      newDate.getMonth() + 1
-    ).padStart(2, "0")}`;
-    setCurrentMonth(newYearMonth);
-  };
+  const [filteredEntries, setFilteredEntries] = useState(null);
 
   // Show correct mood
   const showMood = (mood) => {
@@ -74,62 +63,70 @@ const LoadEntries = ({
   };
 
   useEffect(() => {
+    // set all entries
     setCurrData(data);
-    if (data.length < 1) {
+
+    //set entries only for selected month
+    const currEntries = data
+      .filter((e) => {
+        if (filter.trim() === "") {
+          //if there is no filtertext, show entries from current month
+          return getYearMonth(e.createdAt) === currentMonth;
+        } else {
+          return (
+            e.title.toLowerCase().includes(filter.toLowerCase()) ||
+            e.content.toLowerCase().includes(filter.toLowerCase())
+          );
+        }
+      })
+      .sort((first, second) => {
+        return new Date(second.createdAt) - new Date(first.createdAt);
+      });
+
+    if (currEntries.length < 1) {
       setEmptyList(true);
     } else {
       setEmptyList(false);
     }
-  }, [data]);
+
+    setFilteredEntries(currEntries);
+  }, [data, currentMonth]);
+
+  if (!filteredEntries) return "Loading";
 
   return (
     <>
-      {currData
-        .filter((e) => {
-          if (filter.trim() === "") {
-            //if there is no filtertext, show entries from current month
-            return getYearMonth(e.createdAt) === currentMonth;
-          } else {
-            return (
-              e.title.toLowerCase().includes(filter.toLowerCase()) ||
-              e.content.toLowerCase().includes(filter.toLowerCase())
-            );
-          }
-        })
-        .sort((first, second) => {
-          return new Date(second.createdAt) - new Date(first.createdAt);
-        })
-        .map((e) => (
-          <div
-            key={e.id}
-            className="card overflow-hidden w-full h-75 p-4 rounded-xl shadow-lg border cursor-pointer border-white/20 backdrop-blur-md bg-white/10 text-white hover:bg-white/20 hover:-translate-1 transition duration-500 ease-in-out"
-            onClick={() => showEntry(e)}
-          >
-            <img
-              src={showMood(e.mood)}
-              className="absolute w-10 -mt-2 -mr-2 self-end"
-            />
-            <div className="card-body">
-              <small>{formatDate(e.createdAt)}</small>
-              <h2 className="card-title text-2xl wrap-anywhere">
-                {e.title.replace(/(\r\n|\n|\r)/gm, "").slice(0, 45)}
-                {e.title.length > 45 ? "..." : null}
-              </h2>
-              <p className="wrap-anywhere">
-                {e.content.replace(/(\r\n|\n|\r)/gm, "").slice(0, 100)}
-                {e.content.length > 100 ? "..." : null}
-              </p>
-              <div className="card-actions justify-start ">
-                {Array.isArray(e.categories) &&
-                  e.categories.map((cat, index) => (
-                    <div key={index} className="badge badge-outline">
-                      {cat.label}
-                    </div>
-                  ))}
-              </div>
+      {filteredEntries.map((e) => (
+        <div
+          key={e.id}
+          className="card overflow-hidden w-full h-75 p-4 rounded-xl shadow-lg border cursor-pointer border-white/20 backdrop-blur-md bg-white/10 text-white hover:bg-white/20 hover:-translate-1 transition duration-500 ease-in-out"
+          onClick={() => showEntry(e)}
+        >
+          <img
+            src={showMood(e.mood)}
+            className="absolute w-10 -mt-2 -mr-2 self-end"
+          />
+          <div className="card-body">
+            <small>{formatDate(e.createdAt)}</small>
+            <h2 className="card-title text-2xl wrap-anywhere">
+              {e.title.replace(/(\r\n|\n|\r)/gm, "").slice(0, 45)}
+              {e.title.length > 45 ? "..." : null}
+            </h2>
+            <p className="wrap-anywhere">
+              {e.content.replace(/(\r\n|\n|\r)/gm, "").slice(0, 100)}
+              {e.content.length > 100 ? "..." : null}
+            </p>
+            <div className="card-actions justify-start ">
+              {Array.isArray(e.categories) &&
+                e.categories.map((cat, index) => (
+                  <div key={index} className="badge badge-outline">
+                    {cat.label}
+                  </div>
+                ))}
             </div>
           </div>
-        ))}
+        </div>
+      ))}
       <ModalComponent />
     </>
   );
