@@ -6,7 +6,7 @@ import { useEntry } from "../context/EntryContext";
 import { useLocalStorageContext } from "../context/LocalStorageContext";
 import getYearMonth from "../utils/getYearMonth";
 
-const Analysis = ({ currentMonth, emptyList }) => {
+const Analysis = ({ currentMonth, emptyList, filter }) => {
   // const { returnStorage, data } = useLocalStorage();
   const { data } = useLocalStorageContext();
   const [perc, setPerc] = useState(0);
@@ -46,6 +46,7 @@ const Analysis = ({ currentMonth, emptyList }) => {
   }, [data, currentMonth]);
 
   if (emptyList) return;
+  if (filter || filter.length > 1) return "Search results:";
 
   return (
     <div className="flex flex-col w-[25vw] min-w-[200px] max-w-[400px] h-[2.4rem] text-center">

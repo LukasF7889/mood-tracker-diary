@@ -1,4 +1,4 @@
-const MonthSwitcher = ({ currentMonth, setCurrentMonth }) => {
+const MonthSwitcher = ({ currentMonth, setCurrentMonth, filter }) => {
   // function to switch month pagination
   const changeMonth = (direction) => {
     const [year, month] = currentMonth.split("-").map(Number);
@@ -13,6 +13,8 @@ const MonthSwitcher = ({ currentMonth, setCurrentMonth }) => {
   const currentYearMonth = `${now.getFullYear()}-${String(
     now.getMonth() + 1
   ).padStart(2, "0")}`;
+
+  if (filter || filter.length) return;
 
   return (
     <div className="flex justify-between items-center  gap-4 mb-4 text-white">

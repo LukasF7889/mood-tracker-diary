@@ -4,8 +4,14 @@ import { useLocalStorageContext } from "../context/LocalStorageContext";
 import diarypng from "../assets/diary.png";
 import add from "../assets/add.png";
 
-const NoEntryMsg = ({ clickHandler, emptyList, isCurrentMonth }) => {
+const NoEntryMsg = ({ clickHandler, emptyList, isCurrentMonth, filter }) => {
   const { data, saveEntry } = useLocalStorageContext();
+
+  if (emptyList && filter && filter.length > 1)
+    return (
+      <p className="w-[50%] text-center">No entries match the search term</p>
+    );
+
   if (emptyList && !isCurrentMonth)
     return (
       <div className="flex flex-col w-full justify-center items-center gap-8">

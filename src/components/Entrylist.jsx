@@ -45,8 +45,13 @@ const Entrylist = ({ filter }) => {
           <MonthSwitcher
             currentMonth={currentMonth}
             setCurrentMonth={setCurrentMonth}
+            filter={filter}
           />
-          <Analysis currentMonth={currentMonth} emptyList={emptyList} />
+          <Analysis
+            currentMonth={currentMonth}
+            emptyList={emptyList}
+            filter={filter}
+          />
         </div>
         {/* GRID WITH ENTRIES */}
         <div
@@ -61,6 +66,7 @@ const Entrylist = ({ filter }) => {
               clickHandler={clickHandler}
               emptyList={emptyList}
               isCurrentMonth={isCurrentMonth}
+              filter={filter}
             />
           ) : (
             isCurrentMonth && (

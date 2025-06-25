@@ -90,7 +90,7 @@ const LoadEntries = ({
     }
 
     setFilteredEntries(currEntries);
-  }, [data, currentMonth]);
+  }, [data, currentMonth, filter]);
 
   if (!filteredEntries) return "Loading";
 
