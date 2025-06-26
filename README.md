@@ -1,12 +1,19 @@
-# React + Vite
+# 🧠 Mood Tracker
 
-This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
+A simple and user-friendly mood tracking app built with **Vite** and **React**.  
+This project was developed in about a week as part of the **Fullstack Web & App Development Bootcamp** at **WBS Coding School**. I used this project to deepen my understanding of localStorage and to practice building user-friendly UI components using Tailwind CSS and DaisyUI.
 
-Currently, two official plugins are available:
+## 🚀 Features
 
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react/README.md) uses [Babel](https://babeljs.io/) for Fast Refresh
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react-swc) uses [SWC](https://swc.rs/) for Fast Refresh
+- ⚡️ **Built with Vite & React** for fast development and smooth performance  
+- 💾 **Everything stored in localStorage** – no backend required  
+- 🖱️ **UX-focused design** with clean layout and intuitive interactions  
+- 🔔 **Feedback via react-toastify** to keep users informed  
+- ✍️ **Create, edit, and update entries** with mood selection  
+- 📆 **Switch between months** and view your **average mood per month**  
+- 🔍 **Search function** for keywords in titles and content  
 
-## Expanding the ESLint configuration
+---
 
-If you are developing a production application, we recommend using TypeScript and enable type-aware lint rules. Check out the [TS template](https://github.com/vitejs/vite/tree/main/packages/create-vite/template-react-ts) to integrate TypeScript and [`typescript-eslint`](https://typescript-eslint.io) in your project.
+This is a student project and was created for learning purposes.  
+Feel free to explore, fork, or suggest improvements!
